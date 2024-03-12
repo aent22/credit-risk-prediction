@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Credit Risk Prediction</title>
+</head>
+<body>
+    <h2>Credit Risk Prediction</h2>
+    
+    <form action="/" method="post">
+        <label for="person_age">Your age:</label>
+        <input type="number" name="person_age" required> <br><br>
+
+        <label for="person_income">Your income (Year):</label>
+        <input type="number" step="0.01" name="person_income" required> <br><br>
+
+        <label for="person_home_ownership">Do you own or rent?</label>
+        <select name="person_home_ownership">
+            <option value="RENT">Rent</option>
+            <option value="OWN">Own</option>
+            <option value="MORTGAGE">Mortgage</option>
+            <option value="OTHER">Other</option>
+        </select> <br><br>
+
+        <label for="person_emp_length">How long have you been employed (years)?</label>
+        <input type="number" step="0.1" name="person_emp_length" required> <br><br>
+
+        <label for="loan_intent">What's the purpose of the loan?</label>
+        <select name="loan_intent">
+            <option value="PERSONAL">Personal</option>
+            <option value="EDUCATION">Education</option>
+            <option value="MEDICAL">Medical</option>
+            <option value="VENTURE">Venture</option>
+            <option value="HOMEIMPROVEMENT">Home Improvement</option>
+            <option value="DEBTCONSOLIDATION">Debt Consolidation</option>
+        </select> <br><br>
+
+        <label for="loan_grade">What type of loan are you applying for?</label>
+        <select name="loan_grade">
+            <option value="D">D</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="A">A</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="G">G</option>
+        </select> <br><br>
+
+        <label for="loan_amnt">What is the size of the loan?</label>
+        <input type="number" step="0.01" name="loan_amnt" required> <br><br>
+
+        <label for="loan_int_rate">Target Interest Rate?</label>
+        <select name="loan_int_rate">
+            {% for rate in range(16, 24) %}
+            <option value="{{ rate }}">{{ rate }}%</option>
+            {% endfor %}
+        </select> <br><br>
+
+        <input type="submit" value="Predict">
+    </form>
+    
+    <br>
+    
+    {% if prediction %}
+    <h3>Prediction: {{ prediction }}</h3>
+    {% endif %}
+
+    {% if error %}
+    <p>Error: {{ error }}</p>
+    {% endif %}
+</body>
+</html>

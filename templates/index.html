@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta Information -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS for Button Style and Header -->
+    <style>
+        /* Add custom styles for the button */
+        .custom-button {
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff; /* White outline */
+        }
+
+        /* Style the header with dark gray color */
+        .custom-header {
+            background-color: #333; /* Dark gray background */
+            color: #fff; /* White text */
+            padding: 20px;
+        }
+
+        /* Center the text vertically within the div */
+         .vertical-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* Apply styling to the output text */
+        .custom-text {
+            font-size: 76px; /* Adjust the font size as desired */
+            /* Add other styling properties if needed */
+        }
+
+        .custom-modal-lg {
+            max-width: 60%;
+            max-heights: 80%;
+        }
+
+
+        .btn-close {
+            filter: invert(1); /* This inverts the color making black to white */
+        }
+
+
+        .custom-close-btn {
+            position: absolute;
+            top: 10px;        /* Adjust padding from the top */
+            right: 10px;      /* Adjust padding from the right */
+            filter: invert(1); /* For white color */
+        }
+
+        /* Ensure the modal content has relative positioning so the absolute positioning of the close button is relative to it */
+        .modal-content {
+            position: relative;
+        }
+
+       /* Responsive styles for smaller devices */
+        @media (max-width: 768px) {
+            .custom-modal-lg {
+                max-width: 90%; /* Increase width for smaller screens */
+            }
+
+            .custom-text {
+                font-size: 48px; /* Reduce font size for smaller screens */
+            }
+
+            .custom-close-btn {
+                top: 5px;        /* Adjust padding from the top */
+                right: 5px;      /* Adjust padding from the right */
+            }
+        }
+
+        /* Responsive styles for even smaller devices (e.g., mobile phones) */
+        @media (max-width: 480px) {
+            .custom-text {
+                font-size: 32px; /* Further reduce font size for very small screens */
+            }
+        }
+    </style>
+
+    <!-- Title of the Webpage -->
+    <title>Credit Risk Prediction</title>
+</head>
+
+<body class="bg-dark text-white">
+    <!-- Header Section -->
+    <!-- <header class="custom-header text-center py-5">
+        <h1 class="display-4">TEST ML MODEL INTERFACE</h1>
+    </header> -->
+
+    <!-- Main Content Section -->
+    <main class="container my-5">
+        <section class="row">
+            <!-- Credit Risk Prediction Section with Bootstrap Dark Theme -->
+            <div class="container bg-dark text-white my-5 p-5">
+                <h2 class="mb-4">Credit Risk Prediction</h2>
+                <form action="/" method="post" class="row g-3">
+
+                    <div class="col-md-6">
+                        <label for="person_age" class="form-label">Age:</label>
+                        <input type="number" class="form-control" name="person_age" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="person_income" class="form-label">Income (year):</label>
+                        <input type="number" class="form-control" step="0.01" name="person_income" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="person_home_ownership" class="form-label">Home Ownership</label>
+                        <select class="form-select" name="person_home_ownership">
+                            <option value="RENT">Rent</option>
+                            <option value="OWN">Own</option>
+                            <option value="MORTGAGE">Mortgage</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="person_emp_length" class="form-label">Employment (years)?</label>
+                        <input type="number" class="form-control" step="0.1" name="person_emp_length" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="loan_intent" class="form-label">Loan Intent</label>
+                        <select class="form-select" name="loan_intent">
+                            <option value="PERSONAL">Personal</option>
+                            <option value="EDUCATION">Education</option>
+                            <option value="MEDICAL">Medical</option>
+                            <option value="VENTURE">Venture</option>
+                            <option value="HOMEIMPROVEMENT">Home Improvement</option>
+                            <option value="DEBTCONSOLIDATION">Debt Consolidation</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="loan_grade" class="form-label">Loan Grade</label>
+                        <select class="form-select" name="loan_grade">
+                            <option value="D">D</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="A">A</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="loan_amnt" class="form-label">Loan Size</label>
+                        <input type="number" class="form-control" step="0.01" name="loan_amnt" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="loan_int_rate" class="form-label">Interest Rate</label>
+                        <select class="form-select" name="loan_int_rate">
+                            {% for rate in range(6, 23) %}
+                            <option value="{{ rate }}">{{ rate }}%</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <input type="submit" class="btn btn-primary" value="Predict">
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- Right Column - Prediction Text (Centered) -->
+
+<!--             
+            <div class="col-md-6 text-center">
+                <h3 class="mb-4">Prediction Result</h3>
+                <div class="text-center vertical-center">
+                    {% if prediction == '1' %}
+                        <span class="custom-text text-success">GOOD</span>
+                    {% elif prediction == '0' %}
+                        <span class="custom-text text-danger">HIGH RISK</span>
+                    {% else %}
+                        {{ prediction | safe }}
+                    {% endif %}
+                </div>
+            </div>
+        </section> -->
+
+        <section>
+            <p class="mb-0 text-center">Fill out the form above to assess the customer risk for providing credit.</p>
+        </section>
+    
+
+        <section>
+            <!-- Modal -->
+            <div class="modal fade" id="predictionModal" tabindex="-1" aria-labelledby="predictionModalLabel" aria-hidden="true">
+                <div class="modal-dialog custom-modal-lg modal-dialog-centered">
+                    <div class="modal-content bg-dark">
+                        <div class=>
+                        
+                        <!-- <div class="modal-header">
+                            <h5 class="modal-title text-white" id="predictionModalLabel">Credit Risk Prediction Result</h5>
+                            
+                        </div> -->
+                        <div class="modal-body text-center text-white vertical-center">
+
+                            <button type="button" class="btn-close custom-close-btn" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="text-center vertical-center">
+                                
+                                {% if prediction[0] == 1 %}
+                                    <span class="custom-text text-success">QUALIFIED</span>
+                                    <p class="mb-0">Customer qualifies for the loan.</p>
+                                {% elif prediction[0] == 0 %}
+                                    <span class="custom-text text-danger">NOT QUALIFIED</span>
+                                    <p class="mb-0">Customer is assessed as high risk. Providing a loan is not recommended</p>
+                                {% else %}
+                                    {{ prediction | safe }}
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p class="mb-0">Copyright © 2023 by TokenPoken. All rights reserved.</p>
+    </footer>
+
+    <!-- Link to Bootstrap JavaScript (place it at the end of the body) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        function showPredictionModal() {
+            var predictionModal = new bootstrap.Modal(document.getElementById('predictionModal'));
+            predictionModal.show();
+        }
+
+        // Call the function when you have a prediction result to display
+        {% if prediction is not none %}
+            showPredictionModal();
+        {% endif %}
+    </script>
+
+
+
+</body>
+
+</html>
